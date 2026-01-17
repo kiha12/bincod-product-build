@@ -1,22 +1,34 @@
 
 const recommendationsData = {
     kanto: [
-        { name: "Tokyo Skytree", type: "attraction" },
-        { name: "Shibuya Crossing", type: "attraction" },
-        { name: "Sushi Saito", type: "restaurant" },
-        { name: "Isetan Shinjuku", type: "shop" },
+        { name: "Tokyo Skytree", type: "attraction", description: "The tallest tower in the world, offering panoramic views of Tokyo." },
+        { name: "Shibuya Crossing", type: "attraction", description: "The famous scramble crossing in front of Shibuya Station." },
+        { name: "Sushi Saito", type: "restaurant", description: "A legendary high-end sushi restaurant with 3 Michelin stars." },
+        { name: "Isetan Shinjuku", type: "shop", description: "A historic department store with a massive selection of goods and food." },
+        { name: "Senso-ji Temple", type: "attraction", description: "Tokyo's oldest temple, located in Asakusa, known for its giant lantern." },
+        { name: "Akihabara Electric Town", type: "attraction", description: "The center of Japan's otaku culture and electronics." },
+        { name: "Ghibli Museum", type: "attraction", description: "A whimsical museum showcasing the work of Studio Ghibli." },
+        { name: "Tsukiji Outer Market", type: "restaurant", description: "Famous for fresh seafood and street food stalls." },
     ],
     kansai: [
-        { name: "Kiyomizu-dera", type: "attraction" },
-        { name: "Dotonbori", type: "attraction" },
-        { name: "Kikunoi Roan", type: "restaurant" },
-        { name: "Shinsaibashi-suji", type: "shop" },
+        { name: "Kiyomizu-dera", type: "attraction", description: "An iconic wooden temple in Kyoto with stunning views." },
+        { name: "Dotonbori", type: "attraction", description: "Osaka's most famous tourist destination, known for its neon lights and food." },
+        { name: "Kikunoi Roan", type: "restaurant", description: "Exceptional Kaiseki cuisine in the heart of Kyoto." },
+        { name: "Shinsaibashi-suji", type: "shop", description: "A premier shopping arcade in Osaka." },
+        { name: "Fushimi Inari Taisha", type: "attraction", description: "Famous for its thousands of vermilion torii gates." },
+        { name: "Nara Park", type: "attraction", description: "Home to hundreds of freely roaming deer and the Todai-ji Temple." },
+        { name: "Universal Studios Japan", type: "attraction", description: "A world-class theme park featuring the Wizarding World of Harry Potter." },
+        { name: "Kinkaku-ji (Golden Pavilion)", type: "attraction", description: "A Zen temple whose top two floors are completely covered in gold leaf." },
     ],
     hokkaido: [
-        { name: "Sapporo Snow Festival", type: "attraction" },
-        { name: "Otaru Canal", type: "attraction" },
-        { name: "Sapporo Beer Garden", type: "restaurant" },
-        { name: "Tanukikoji Shopping Arcade", type: "shop" },
+        { name: "Sapporo Snow Festival", type: "attraction", description: "A major winter event featuring massive snow and ice sculptures." },
+        { name: "Otaru Canal", type: "attraction", description: "A beautifully preserved canal area lined with warehouses." },
+        { name: "Sapporo Beer Garden", type: "restaurant", description: "Enjoy Genghis Khan (grilled mutton) and fresh local beer." },
+        { name: "Tanukikoji Shopping Arcade", type: "shop", description: "A long, covered shopping street in downtown Sapporo." },
+        { name: "Niseko United", type: "attraction", description: "World-renowned ski resort area known for its powder snow." },
+        { name: "Asahiyama Zoo", type: "attraction", description: "A popular zoo known for its unique enclosures and animal interactions." },
+        { name: "Farm Tomita", type: "attraction", description: "Famous for its vast lavender fields in Furano." },
+        { name: "Hakodate Morning Market", type: "restaurant", description: "The place to go for fresh seafood bowls (Kaisendon)." },
     ],
 };
 
@@ -57,6 +69,12 @@ class RecommendationCard extends HTMLElement {
         
         const type = document.createElement('p');
         type.textContent = `Type: ${this.getAttribute('type')}`;
+        type.style.fontStyle = "italic";
+        type.style.fontSize = "0.9em";
+
+        const desc = document.createElement('p');
+        desc.textContent = this.getAttribute('description');
+        desc.style.marginBottom = "1rem";
         
         const addButton = document.createElement('button');
         addButton.textContent = "Add to Itinerary";
@@ -68,6 +86,7 @@ class RecommendationCard extends HTMLElement {
 
         wrapper.appendChild(name);
         wrapper.appendChild(type);
+        wrapper.appendChild(desc);
         wrapper.appendChild(addButton);
 
         const style = document.createElement('style');
@@ -78,6 +97,11 @@ class RecommendationCard extends HTMLElement {
                 border-radius: 4px;
                 padding: 1rem;
                 margin-bottom: 1rem;
+                transition: transform 0.2s;
+            }
+            .recommendation-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             }
             h3 {
                 margin-top: 0;
@@ -85,6 +109,7 @@ class RecommendationCard extends HTMLElement {
             }
             p {
                 color: var(--text-color);
+                line-height: 1.4;
             }
             button {
                 background-color: var(--button-bg);
@@ -109,6 +134,7 @@ function updateRecommendations() {
         const card = document.createElement('recommendation-card');
         card.setAttribute('name', item.name);
         card.setAttribute('type', item.type);
+        card.setAttribute('description', item.description);
         recommendationsContainer.appendChild(card);
     });
 }

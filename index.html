@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plan your perfect trip to Japan with our interactive travel planner. Explore top attractions, restaurants, and shops in Kanto, Kansai, and Hokkaido.">
     <title>Japan Travel Planner</title>
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6250375949197692"
@@ -15,12 +16,23 @@
         <button id="theme-toggle">Toggle Theme</button>
     </header>
     <main>
+        <section id="about">
+            <h2>Welcome to Japan Travel Planner</h2>
+            <p>
+                Planning a trip to Japan can be overwhelming with so many beautiful places to visit. 
+                Our tool simplifies this process by curating top-rated attractions, culinary experiences, and shopping destinations across Japan's most popular regions.
+            </p>
+            <p>
+                <strong>How to use:</strong> Select a region (Kanto, Kansai, or Hokkaido) to see our hand-picked recommendations. 
+                Read the descriptions to find what interests you, and click "Add to Itinerary" to build your custom travel plan.
+            </p>
+        </section>
         <section id="region-selection">
             <h2>Select a Region</h2>
             <select id="region-dropdown">
-                <option value="kanto">Kanto</option>
-                <option value="kansai">Kansai</option>
-                <option value="hokkaido">Hokkaido</option>
+                <option value="kanto">Kanto (Tokyo, Yokohama)</option>
+                <option value="kansai">Kansai (Kyoto, Osaka)</option>
+                <option value="hokkaido">Hokkaido (Sapporo, Otaru)</option>
             </select>
         </section>
         <section id="recommendations">
@@ -72,6 +84,10 @@
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </section>
     </main>
+    <footer>
+        <p>&copy; 2026 Japan Travel Planner. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy Policy</a></p>
+    </footer>
     <script src="main.js"></script>
 </body>
 </html>
