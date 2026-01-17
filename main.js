@@ -27,6 +27,17 @@ const themeToggle = document.getElementById("theme-toggle");
 
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
+    
+    // Reload Disqus to adapt to the new theme
+    if (typeof DISQUS !== 'undefined') {
+        DISQUS.reset({
+            reload: true,
+            config: function () {  
+                this.page.identifier = window.location.pathname;  
+                this.page.url = window.location.href;  
+            }
+        });
+    }
 });
 
 // Set initial theme based on user preference
