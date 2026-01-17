@@ -68,12 +68,48 @@ header h1 {
 }
 
 main {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "about about"
+        "region region"
+        "recs plan"
+        "contact comments";
     gap: 2rem;
+}
+
+#about { grid-area: about; }
+#region-selection { grid-area: region; }
+#recommendations { grid-area: recs; }
+#itinerary { grid-area: plan; }
+#contact { grid-area: contact; }
+#comments { grid-area: comments; }
+
+#recommendations-container, #itinerary-container {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem; /* Space for scrollbar */
+}
+
+/* Custom Scrollbar Styling */
+#recommendations-container::-webkit-scrollbar,
+#itinerary-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#recommendations-container::-webkit-scrollbar-track,
+#itinerary-container::-webkit-scrollbar-track {
+    background: var(--card-border);
+    border-radius: 4px;
+}
+
+#recommendations-container::-webkit-scrollbar-thumb,
+#itinerary-container::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-radius: 4px;
 }
 
 section {
@@ -82,16 +118,21 @@ section {
     box-shadow: var(--shadow-sm);
     padding: 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: fit-content; /* Prevent sections from stretching unnecessarily */
 }
 
-/* Make About and Contact take full width on larger screens if desired, 
-   or keep grid. Here we let them flow naturally in the grid */
-
-h2 {
-    color: var(--text-color);
-    border-bottom: 2px solid var(--button-bg);
-    padding-bottom: 0.5rem;
-    margin-top: 0;
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "about"
+            "region"
+            "recs"
+            "plan"
+            "contact"
+            "comments";
+    }
 }
 
 .itinerary-item {
