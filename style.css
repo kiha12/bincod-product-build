@@ -94,24 +94,63 @@ h2 {
     margin-top: 0;
 }
 
-#region-selection select {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 4px;
-    border: 1px solid var(--card-border);
+.itinerary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--card-bg);
-    color: var(--text-color);
-    font-size: 1rem;
+    border: 1px solid var(--card-border);
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    cursor: move; /* Fallback for grab */
+    cursor: grab;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-.recommendation-card {
+.itinerary-item.dragging {
+    opacity: 0.5;
+    background-color: var(--background-color);
+    border: 1px dashed var(--button-bg);
+}
+
+.itinerary-content {
+    flex-grow: 1;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+
+.itinerary-controls {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.itinerary-controls button {
+    background-color: transparent;
     border: 1px solid var(--card-border);
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.2s, box-shadow 0.2s;
+    color: var(--text-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.itinerary-controls button:hover {
+    background-color: var(--button-bg);
+    color: var(--button-color);
+    border-color: var(--button-bg);
+}
+
+.itinerary-controls button.delete-btn {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.itinerary-controls button.delete-btn:hover {
+    background-color: #e74c3c;
+    color: white;
 }
 
 .recommendation-card:hover {

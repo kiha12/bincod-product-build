@@ -103,9 +103,7 @@ class RecommendationCard extends HTMLElement {
         const addButton = document.createElement('button');
         addButton.textContent = "Add to Itinerary";
         addButton.addEventListener('click', () => {
-            const itineraryItem = document.createElement('div');
-            itineraryItem.textContent = this.getAttribute('name');
-            itineraryContainer.appendChild(itineraryItem);
+            addItineraryItem(this.getAttribute('name'));
         });
 
         wrapper.appendChild(name);
@@ -151,6 +149,94 @@ class RecommendationCard extends HTMLElement {
 }
 
 customElements.define('recommendation-card', RecommendationCard);
+
+function addItineraryItem(name) {
+    const item = document.createElement('div');
+    item.classList.add('itinerary-item');
+    item.setAttribute('draggable', 'true');
+
+    // Content
+    const content = document.createElement('span');
+    content.classList.add('itinerary-content');
+    content.textContent = name;
+
+    // Controls
+    const controls = document.createElement('div');
+    controls.classList.add('itinerary-controls');
+
+    // Up Button
+    const upBtn = document.createElement('button');
+    upBtn.innerHTML = '&#9650;'; // Up arrow
+    upBtn.title = "Move Up";
+    upBtn.addEventListener('click', () => {
+        if (item.previousElementSibling) {
+            itineraryContainer.insertBefore(item, item.previousElementSibling);
+        }
+    });
+
+    // Down Button
+    const downBtn = document.createElement('button');
+    downBtn.innerHTML = '&#9660;'; // Down arrow
+    downBtn.title = "Move Down";
+    downBtn.addEventListener('click', () => {
+        if (item.nextElementSibling) {
+            itineraryContainer.insertBefore(item.nextElementSibling, item);
+        }
+    });
+
+    // Delete Button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '&times;'; // X mark
+    deleteBtn.title = "Delete";
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.addEventListener('click', () => {
+        item.remove();
+    });
+
+    controls.appendChild(upBtn);
+    controls.appendChild(downBtn);
+    controls.appendChild(deleteBtn);
+
+    item.appendChild(content);
+    item.appendChild(controls);
+
+    // Drag and Drop Events
+    item.addEventListener('dragstart', () => {
+        item.classList.add('dragging');
+    });
+
+    item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+    });
+
+    itineraryContainer.appendChild(item);
+}
+
+// Drag Over Container Event
+itineraryContainer.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const afterElement = getDragAfterElement(itineraryContainer, e.clientY);
+    const draggable = document.querySelector('.dragging');
+    if (afterElement == null) {
+        itineraryContainer.appendChild(draggable);
+    } else {
+        itineraryContainer.insertBefore(draggable, afterElement);
+    }
+});
+
+function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.itinerary-item:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
 
 function updateRecommendations() {
     const selectedRegion = regionDropdown.value;
