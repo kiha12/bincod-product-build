@@ -1,15 +1,53 @@
 
+
+:root {
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --header-bg: #333;
+    --header-color: white;
+    --section-bg: white;
+    --card-bg: white;
+    --card-border: #ccc;
+    --button-bg: #333;
+    --button-color: white;
+}
+
+body.dark-mode {
+    --background-color: #333;
+    --text-color: #f4f4f4;
+    --header-bg: #222;
+    --header-color: white;
+    --section-bg: #444;
+    --card-bg: #555;
+    --card-border: #777;
+    --button-bg: #555;
+    --button-color: white;
+}
+
 body {
     font-family: sans-serif;
     margin: 0;
-    background-color: #f4f4f4;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 header {
-    background-color: #333;
-    color: white;
+    background-color: var(--header-bg);
+    color: var(--header-color);
     padding: 1rem;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#theme-toggle {
+    background-color: var(--button-bg);
+    color: var(--button-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 main {
@@ -20,7 +58,7 @@ main {
 }
 
 section {
-    background-color: white;
+    background-color: var(--section-bg);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 1rem;
@@ -41,7 +79,8 @@ section {
 }
 
 .recommendation-card {
-    border: 1px solid #ccc;
+    border: 1px solid var(--card-border);
+    background-color: var(--card-bg);
     border-radius: 4px;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -52,8 +91,8 @@ section {
 }
 
 .recommendation-card button {
-    background-color: #333;
-    color: white;
+    background-color: var(--button-bg);
+    color: var(--button-color);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;

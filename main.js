@@ -23,6 +23,16 @@ const recommendationsData = {
 const regionDropdown = document.getElementById("region-dropdown");
 const recommendationsContainer = document.getElementById("recommendations-container");
 const itineraryContainer = document.getElementById("itinerary-container");
+const themeToggle = document.getElementById("theme-toggle");
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+});
+
+// Set initial theme based on user preference
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark-mode');
+}
 
 class RecommendationCard extends HTMLElement {
     constructor() {
@@ -48,6 +58,33 @@ class RecommendationCard extends HTMLElement {
         wrapper.appendChild(name);
         wrapper.appendChild(type);
         wrapper.appendChild(addButton);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .recommendation-card {
+                border: 1px solid var(--card-border);
+                background-color: var(--card-bg);
+                border-radius: 4px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            h3 {
+                margin-top: 0;
+                color: var(--text-color);
+            }
+            p {
+                color: var(--text-color);
+            }
+            button {
+                background-color: var(--button-bg);
+                color: var(--button-color);
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        `;
+        shadow.appendChild(style);
         shadow.appendChild(wrapper);
     }
 }
