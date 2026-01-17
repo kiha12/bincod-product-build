@@ -30,6 +30,22 @@ const recommendationsData = {
         { name: "Farm Tomita", type: "attraction", description: "Famous for its vast lavender fields in Furano." },
         { name: "Hakodate Morning Market", type: "restaurant", description: "The place to go for fresh seafood bowls (Kaisendon)." },
     ],
+    okinawa: [
+        { name: "Churaumi Aquarium", type: "attraction", description: "One of the largest aquariums in the world, famous for its whale sharks." },
+        { name: "Shurijo Castle", type: "attraction", description: "A gusuku castle that was the palace of the Ryukyu Kingdom." },
+        { name: "Kokusai Dori", type: "shop", description: "Naha's main shopping street, lined with souvenir shops and restaurants." },
+        { name: "Okinawa Soba Eibun", type: "restaurant", description: "Popular spot for authentic Okinawa Soba." },
+        { name: "American Village", type: "attraction", description: "A large entertainment complex with an American theme." },
+        { name: "Cape Manzamo", type: "attraction", description: "A scenic rock formation on the coast shaped like an elephant's trunk." },
+    ],
+    fukuoka: [
+        { name: "Dazaifu Tenmangu", type: "attraction", description: "A famous shrine dedicated to the god of learning." },
+        { name: "Canal City Hakata", type: "shop", description: "A large shopping and entertainment complex with a canal running through it." },
+        { name: "Yatai Food Stalls (Nakasu)", type: "restaurant", description: "Open-air food stands serving famous Hakata ramen and other dishes." },
+        { name: "Fukuoka Tower", type: "attraction", description: "Japan's tallest seaside tower offering great views of the city." },
+        { name: "Ohori Park", type: "attraction", description: "A large park in central Fukuoka with a beautiful pond." },
+        { name: "Ichiran Ramen Main Shop", type: "restaurant", description: "The headquarters of the world-famous tonkotsu ramen chain." },
+    ]
 };
 
 const regionDropdown = document.getElementById("region-dropdown");
@@ -60,7 +76,14 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 class RecommendationCard extends HTMLElement {
     constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'open' });
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
         const wrapper = document.createElement('div');
         wrapper.setAttribute('class', 'recommendation-card');
         
@@ -68,7 +91,8 @@ class RecommendationCard extends HTMLElement {
         name.textContent = this.getAttribute('name');
         
         const type = document.createElement('p');
-        type.textContent = `Type: ${this.getAttribute('type')}`;
+        const typeVal = this.getAttribute('type');
+        type.textContent = `Type: ${typeVal.charAt(0).toUpperCase() + typeVal.slice(1)}`;
         type.style.fontStyle = "italic";
         type.style.fontSize = "0.9em";
 
@@ -120,8 +144,9 @@ class RecommendationCard extends HTMLElement {
                 cursor: pointer;
             }
         `;
-        shadow.appendChild(style);
-        shadow.appendChild(wrapper);
+        this.shadowRoot.innerHTML = ''; // Clear previous content if any
+        this.shadowRoot.appendChild(style);
+        this.shadowRoot.appendChild(wrapper);
     }
 }
 
@@ -130,12 +155,39 @@ customElements.define('recommendation-card', RecommendationCard);
 function updateRecommendations() {
     const selectedRegion = regionDropdown.value;
     recommendationsContainer.innerHTML = "";
-    recommendationsData[selectedRegion].forEach(item => {
-        const card = document.createElement('recommendation-card');
-        card.setAttribute('name', item.name);
-        card.setAttribute('type', item.type);
-        card.setAttribute('description', item.description);
-        recommendationsContainer.appendChild(card);
+    
+    const regionData = recommendationsData[selectedRegion];
+    
+    // Group by type
+    const groupedData = regionData.reduce((acc, item) => {
+        const type = item.type;
+        if (!acc[type]) {
+            acc[type] = [];
+        }
+        acc[type].push(item);
+        return acc;
+    }, {});
+
+    // Render by group
+    const types = ['attraction', 'restaurant', 'shop']; // Define order
+    
+    types.forEach(type => {
+        if (groupedData[type] && groupedData[type].length > 0) {
+            const groupHeader = document.createElement('h3');
+            groupHeader.textContent = type.charAt(0).toUpperCase() + type.slice(1) + 's';
+            groupHeader.style.color = 'var(--text-color)';
+            groupHeader.style.marginTop = '1.5rem';
+            groupHeader.style.borderBottom = '1px solid var(--card-border)';
+            recommendationsContainer.appendChild(groupHeader);
+
+            groupedData[type].forEach(item => {
+                const card = document.createElement('recommendation-card');
+                card.setAttribute('name', item.name);
+                card.setAttribute('type', item.type);
+                card.setAttribute('description', item.description);
+                recommendationsContainer.appendChild(card);
+            });
+        }
     });
 }
 
