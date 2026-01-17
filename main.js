@@ -122,38 +122,44 @@ class RecommendationCard extends HTMLElement {
             .recommendation-card {
                 border: 1px solid var(--card-border);
                 background-color: var(--card-bg);
-                border-radius: 4px;
-                padding: 1rem;
-                margin-bottom: 1rem;
+                border-radius: 8px; /* Slightly more rounded */
+                padding: 1.25rem; /* More padding */
+                margin-bottom: 1.5rem; /* More spacing between cards */
                 transition: transform 0.2s;
-                overflow: hidden; /* Ensure image stays inside corners */
+                overflow: hidden;
             }
             .recommendation-card:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Stronger shadow */
             }
             img {
                 width: 100%;
-                height: 200px;
+                height: 250px; /* Taller image */
                 object-fit: cover;
-                border-radius: 4px;
+                border-radius: 6px;
                 margin-bottom: 1rem;
             }
             h3 {
                 margin-top: 0;
                 color: var(--text-color);
+                font-size: 1.4rem; /* Larger title */
+                margin-bottom: 0.5rem;
             }
             p {
                 color: var(--text-color);
-                line-height: 1.4;
+                line-height: 1.5;
+                font-size: 1rem;
             }
             button {
                 background-color: var(--button-bg);
                 color: var(--button-color);
                 border: none;
-                padding: 0.5rem 1rem;
+                padding: 0.75rem 1.25rem; /* Larger button */
                 border-radius: 4px;
                 cursor: pointer;
+                font-size: 1rem;
+                width: 100%;
+                margin-top: 0.5rem;
             }
         `;
         this.shadowRoot.innerHTML = ''; // Clear previous content if any

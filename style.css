@@ -68,11 +68,11 @@ header h1 {
 }
 
 main {
-    max-width: 1400px;
+    max-width: 1600px; /* Increased max-width for more space */
     margin: 0 auto;
     padding: 2rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr; /* Recommendations get more width */
     grid-template-areas: 
         "about about"
         "region region"
@@ -89,7 +89,8 @@ main {
 #comments { grid-area: comments; }
 
 #recommendations-container, #itinerary-container {
-    max-height: 600px;
+    max-height: 80vh; /* Use viewport height for better scaling */
+    min-height: 600px; /* Ensure it's not too small on short screens */
     overflow-y: auto;
     padding-right: 0.5rem; /* Space for scrollbar */
 }
